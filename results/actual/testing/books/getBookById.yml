@@ -1,0 +1,16 @@
+getBookById:  # 8/27/2024, 02:08:16:146
+  request:
+    url: http://localhost:3000/api/books/1
+    method: GET
+    headers: {}
+  response:  # 91 ms
+    status:
+      code: 200
+      message: OK
+    headers:
+      connection: close
+      content-type: application/json
+      date: Mon, 26 Aug 2024 23:08:16 GMT
+      transfer-encoding: chunked
+      vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch
+    body: '"Book with selected ID was not found."'

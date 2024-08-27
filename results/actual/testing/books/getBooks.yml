@@ -1,0 +1,18 @@
+getBooks:  # 8/27/2024, 02:06:38:675
+  request:
+    url: http://localhost:3000/api/books
+    method: GET
+    headers: {}
+  response:  # 2674 ms
+    status:
+      code: 200
+      message: OK
+    headers:
+      connection: close
+      content-type: application/json
+      date: Mon, 26 Aug 2024 23:06:41 GMT
+      transfer-encoding: chunked
+      vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch
+    body: |-
+      [
+      ]
