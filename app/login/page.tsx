@@ -1,14 +1,9 @@
-"use client";
-
-import { User, UserRole } from "../lib/definitions";
+import { cookies } from "next/headers";
+import { users } from "../lib/mock_data";
+import UsersTable from "./UsersTable";
+import { stringify } from "querystring";
+import { loginAs } from "../lib/actions/auth";
 
 export default function Page() {
-  // const loginAs = (role: UserRole) => {};
-
-  return (
-    // TODO add semantic html
-    <div className="flex flex-col gap-2">
-      <p>Login as</p>
-    </div>
-  );
+  return <UsersTable users={users} handleLogin={loginAs} />;
 }

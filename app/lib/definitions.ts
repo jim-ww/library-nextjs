@@ -12,19 +12,34 @@ export type User = {
   departmentIDs: number[];
 };
 
+export enum BookStatus {
+  Assigned = "assigned",
+  Borrowed = "borrowed",
+  Available = "available",
+}
+
+export type BookState = {
+  status: BookStatus;
+  userId: number | null;
+  borrowDate: string | null;
+  returnDate: string | null;
+};
+
 export type Book = {
   id: number;
   title: string;
   author: string;
-  borrowedBy?: {
-    userId: number;
-    borrowDate: string;
-    returnDate: string | null;
-  };
+  state: BookState;
   departmentIDs: number[];
 };
 
 export type Department = {
   id: number;
-  description: string;
+  name: string;
+};
+
+export type SessionPayload = {
+  userId: number;
+  role: UserRole;
+  expiresAt: Date;
 };
