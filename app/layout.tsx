@@ -2,30 +2,23 @@ import type { Metadata } from "next";
 import "@/app/ui/global.css";
 import Link from "next/link";
 import { inter } from "@/app/ui/fonts";
-import Image from "next/image";
-import { cookies } from "next/headers";
 import type { User } from "./lib/definitions";
-import useAuthStore from "./lib/store";
-import { useRouter } from "next/navigation";
+import { getSession } from "./lib/session";
+import { getUser } from "./lib/actions/users";
 
 export const metadata: Metadata = {
   title: "First Next App",
   description: "Library management app",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const authStore = useAuthStore();
-  const router = useRouter();
-  const user: User | null = authStore.user;
-
-  if (!user) {
-    router.push("/login");
-    return;
-  }
+  const session = await getSession();
+  if (!session) return;
+  const user = await getUser(session.userId);
 
   return (
     <html lang="en">

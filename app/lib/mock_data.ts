@@ -1,98 +1,236 @@
-import { UserRole, User, Book, Department } from "./definitions";
+import {
+  User,
+  UserRole,
+  Book,
+  BookStatus,
+  type Department,
+} from "./definitions";
 
-// Mock Users
+const departments: Department[] = [
+  { id: 1, name: "Computer Science" },
+  { id: 2, name: "Software Engineering" },
+  { id: 3, name: "Information Technology" },
+];
+
 const users: User[] = [
   {
-    id: "0cok9w0p4nb3zav",
+    id: 1,
+    name: "John Doe",
+    email: "john.doe@example.com",
+    role: UserRole.Student,
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane.smith@example.com",
+    role: UserRole.Teacher,
+    departmentIDs: [departments[0].id, departments[1].id],
+  },
+  {
+    id: 3,
     name: "Alice Johnson",
     email: "alice.johnson@example.com",
     role: UserRole.Student,
-    departmentIDs: ["0cok9w0p4nb3zaa", "0cok9w0p4nb3zab"],
-    assignedBookIDs: ["0cok9w0p4nb3zaq"],
-    borrowedBooks: [
-      {
-        bookId: "0cok9w0p4nb3zaq",
-        borrowDate: "2024-08-01",
-        returnDate: null,
-      },
-    ],
+    departmentIDs: [departments[1].id],
   },
   {
-    id: "0cok9w0p4nb3zbv",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    role: UserRole.Teacher,
-    departmentIDs: ["0cok9w0p4nb3zaa"],
-    assignedBookIDs: ["0cok9w0p4nb3zaq", "0cok9w0p4nb3zap"],
-    borrowedBooks: [],
+    id: 4,
+    name: "Bob Brown",
+    email: "bob.brown@example.com",
+    role: UserRole.Student,
+    departmentIDs: [departments[2].id],
   },
   {
-    id: "0cok9w0p4nb3zcv",
-    name: "Mary Smith",
-    email: "mary.smith@example.com",
+    id: 5,
+    name: "Admin User",
+    email: "admin@example.com",
     role: UserRole.Admin,
-    departmentIDs: ["0cok9w0p4nb3zac"],
-    assignedBookIDs: [],
-    borrowedBooks: [],
+    departmentIDs: [],
   },
 ];
 
-// Mock Books
 const books: Book[] = [
   {
-    id: "0cok9w0p4nb3zaq",
+    id: 1,
     title: "Introduction to Algorithms",
     author: "Thomas H. Cormen",
-    borrowedBy: {
-      userId: users[0].id, // Alice Johnson
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[0].id,
       borrowDate: "2024-08-01",
+      returnDate: "2024-08-15",
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 2,
+    title: "Design Patterns: Elements of Reusable Object-Oriented Software",
+    author: "Erich Gamma",
+    state: {
+      status: BookStatus.Assigned,
+      userId: users[1].id,
+      borrowDate: null,
       returnDate: null,
     },
-    departmentIDs: [users[0].departmentIDs[0], users[0].departmentIDs[1]], // Departments of Alice Johnson
+    departmentIDs: [departments[1].id],
   },
   {
-    id: "0cok9w0p4nb3zap",
-    title: "Clean Code",
+    id: 3,
+    title: "Clean Code: A Handbook of Agile Software Craftsmanship",
     author: "Robert C. Martin",
-    borrowedBy: null,
-    departmentIDs: [users[1].departmentIDs[0]], // Department of John Doe
+    state: {
+      status: BookStatus.Available,
+      userId: null,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[0].id, departments[1].id],
   },
   {
-    id: "0cok9w0p4nb3zax",
-    title: "Design Patterns",
-    author: "Erich Gamma",
-    borrowedBy: null,
-    departmentIDs: [users[0].departmentIDs[1]], // Second department of Alice Johnson
+    id: 4,
+    title: "The Pragmatic Programmer",
+    author: "Andrew Hunt",
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[2].id,
+      borrowDate: "2024-07-20",
+      returnDate: "2024-08-10",
+    },
+    departmentIDs: [departments[1].id],
+  },
+  {
+    id: 5,
+    title: "Code Complete",
+    author: "Steve McConnell",
+    state: {
+      status: BookStatus.Available,
+      userId: null,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 6,
+    title: "Refactoring: Improving the Design of Existing Code",
+    author: "Martin Fowler",
+    state: {
+      status: BookStatus.Assigned,
+      userId: users[1].id,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 7,
+    title: "Head First Design Patterns",
+    author: "Eric Freeman",
+    state: {
+      status: BookStatus.Available,
+      userId: null,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[2].id],
+  },
+  {
+    id: 8,
+    title: "JavaScript: The Good Parts",
+    author: "Douglas Crockford",
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[3].id,
+      borrowDate: "2024-08-05",
+      returnDate: "2024-08-25",
+    },
+    departmentIDs: [departments[2].id],
+  },
+  {
+    id: 9,
+    title: "You Don't Know JS",
+    author: "Kyle Simpson",
+    state: {
+      status: BookStatus.Available,
+      userId: null,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[0].id, departments[2].id],
+  },
+  {
+    id: 10,
+    title: "The Art of Computer Programming",
+    author: "Donald Knuth",
+    state: {
+      status: BookStatus.Assigned,
+      userId: users[0].id,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[1].id],
+  },
+  {
+    id: 11,
+    title: "Effective Java",
+    author: "Joshua Bloch",
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[2].id,
+      borrowDate: "2024-07-30",
+      returnDate: "2024-08-14",
+    },
+    departmentIDs: [departments[2].id],
+  },
+  {
+    id: 12,
+    title: "Cracking the Coding Interview",
+    author: "Gayle Laakmann McDowell",
+    state: {
+      status: BookStatus.Available,
+      userId: null,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[0].id, departments[1].id],
+  },
+  {
+    id: 13,
+    title: "The Mythical Man-Month",
+    author: "Frederick P. Brooks Jr.",
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[3].id,
+      borrowDate: "2024-07-18",
+      returnDate: "2024-08-08",
+    },
+    departmentIDs: [departments[1].id],
+  },
+  {
+    id: 14,
+    title: "The Clean Coder",
+    author: "Robert C. Martin",
+    state: {
+      status: BookStatus.Assigned,
+      userId: users[2].id,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[2].id],
+  },
+  {
+    id: 15,
+    title: "Test-Driven Development: By Example",
+    author: "Kent Beck",
+    state: {
+      status: BookStatus.Available,
+      userId: null,
+      borrowDate: null,
+      returnDate: null,
+    },
+    departmentIDs: [departments[0].id],
   },
 ];
 
-// Mock Departments
-const departments: Department[] = [
-  {
-    id: "0cok9w0p4nb3zaa",
-    description: "Computer Science",
-    userIDs: [
-      { userId: users[0].id, role: users[0].role }, // Alice Johnson
-      { userId: users[1].id, role: users[1].role }, // John Doe
-    ],
-    bookIDs: [books[0].id, books[1].id], // Books in Computer Science
-  },
-  {
-    id: "0cok9w0p4nb3zab",
-    description: "Software Engineering",
-    userIDs: [
-      { userId: users[0].id, role: users[0].role }, // Alice Johnson
-    ],
-    bookIDs: [books[0].id, books[2].id], // Books in Software Engineering
-  },
-  {
-    id: "0cok9w0p4nb3zac",
-    description: "Administration",
-    userIDs: [
-      { userId: users[2].id, role: users[2].role }, // Mary Smith
-    ],
-    bookIDs: [],
-  },
-];
-
-export { users, books, departments };
+export { departments, users, books };

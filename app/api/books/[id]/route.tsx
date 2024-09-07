@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { books } from "../../../lib/mock_data";
 import type { Book } from "@/app/lib/definitions";
 
-export async function GET(bookId: string) {
+export async function GET(bookId: number) {
   const book: Book | undefined = books.find((book: Book) => book.id === bookId);
 
   if (!book) {
