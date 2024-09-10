@@ -1,7 +1,6 @@
-// hooks/useUsers.ts
-import { useEffect, useState } from "react";
-import type { User } from "../definitions";
-import { getUsers } from "../actions/users";
+import { useEffect, useState } from 'react';
+import { getUsers } from '../actions/users';
+import type { User } from '../definitions';
 
 export function useUsers() {
   const [users, setUsers] = useState<User[] | null>(null);
@@ -14,7 +13,7 @@ export function useUsers() {
         const data = await getUsers();
         setUsers(data);
       } catch (err) {
-        setError("Failed to fetch users");
+        setError('Failed to fetch user profiles: ' + String(err));
       } finally {
         setLoading(false);
       }

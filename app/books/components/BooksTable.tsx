@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import { useSearchParams } from "next/navigation";
-import { BookStatus, type Book } from "../../lib/definitions";
+import { useSearchParams } from 'next/navigation';
+import { BookStatus, type Book } from '../../lib/definitions';
+import Link from 'next/link';
 
 export default function BooksTable({ books }: { books: Book[] }) {
-  const thClassname = "py-2 px-4 border-b";
-  const tdClassname = "py-2 px-4 border-b";
+  const thClassname = 'py-2 px-4 border-b';
+  const tdClassname = 'py-2 px-4 border-b';
 
   const searchParams = useSearchParams();
-  const inHand = searchParams.get("inHand");
+  const inHand = searchParams.get('inHand');
 
   const filteredBooks =
-    inHand === "true"
+    inHand === 'true'
       ? books.filter((book: Book) => book.state.status == BookStatus.Borrowed)
       : books;
 
@@ -29,13 +30,15 @@ export default function BooksTable({ books }: { books: Book[] }) {
         </thead>
         <tbody>
           {filteredBooks.map((book) => (
-            <tr key={book.id}>
-              <td className={tdClassname}>{book.title}</td>
-              <td className={tdClassname}>{book.author}</td>
-              <td className={tdClassname}>{book.state.status}</td>
-              <td className={tdClassname}>{book.state.borrowDate}</td>
-              <td className={tdClassname}>{book.state.returnDate}</td>
-            </tr>
+            <Link href={`/books/${book.id}`}>
+              <tr key={book.id}>
+                <td className={tdClassname}>{book.title}</td>
+                <td className={tdClassname}>{book.author}</td>
+                <td className={tdClassname}>{book.state.status}</td>
+                <td className={tdClassname}>{book.state.borrowDate}</td>
+                <td className={tdClassname}>{book.state.returnDate}</td>
+              </tr>
+            </Link>
           ))}
         </tbody>
       </table>

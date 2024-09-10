@@ -1,13 +1,17 @@
-import { NextResponse, type NextRequest } from "next/server";
-import type { SessionPayload } from "./app/lib/definitions";
-import { getSession, updateSession } from "./app/lib/session";
+import { NextResponse, type NextRequest } from 'next/server';
+import { getSession, updateSession } from './app/lib/session';
 
 export async function middleware(request: NextRequest) {
-  const session: SessionPayload | null = await getSession();
-  if (!session) NextResponse.redirect(new URL("/login", request.url)); // TODO redirect("/login");
-  await updateSession(request);
+  const session = await getSession();
+  if (!session && request.nextUrl.pathname !== '/login') {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  if (session) await updateSession(request);
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: "/((?!login).*)",
+  matcher: '/((?!login).*)',
 };
