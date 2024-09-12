@@ -3,11 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import { BookStatus, type Book } from '../../lib/definitions';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 
-export default function BooksTable({ books }: { books: Book[] }) {
-  const thClassname = 'py-2 px-4 border-b';
-  const tdClassname = 'py-2 px-4 border-b';
-
+export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
   const searchParams = useSearchParams();
   const inHand = searchParams.get('inHand');
 
@@ -21,22 +19,22 @@ export default function BooksTable({ books }: { books: Book[] }) {
       <table className="min-w-full bg-white">
         <thead>
           <tr>
-            <th className={thClassname}>Title</th>
-            <th className={thClassname}>Author</th>
-            <th className={thClassname}>Status</th>
-            <th className={thClassname}>Borrow date</th>
-            <th className={thClassname}>Return date</th>
+            <BookTH>Title</BookTH>
+            <BookTH>Author</BookTH>
+            <BookTH>Status</BookTH>
+            <BookTH>Borrow date</BookTH>
+            <BookTH>Return date</BookTH>
           </tr>
         </thead>
         <tbody>
           {filteredBooks.map((book) => (
-            <Link href={`/books/${book.id}`}>
+            <Link key={book.id} href={`/books/${book.id}`}>
               <tr key={book.id}>
-                <td className={tdClassname}>{book.title}</td>
-                <td className={tdClassname}>{book.author}</td>
-                <td className={tdClassname}>{book.state.status}</td>
-                <td className={tdClassname}>{book.state.borrowDate}</td>
-                <td className={tdClassname}>{book.state.returnDate}</td>
+                <BookTD key={book.id}>{book.title}</BookTD>
+                <BookTD key={book.id}>{book.author}</BookTD>
+                <BookTD key={book.id}>{book.state.status}</BookTD>
+                <BookTD key={book.id}>{book.state.borrowDate}</BookTD>
+                <BookTD key={book.id}>{book.state.returnDate}</BookTD>
               </tr>
             </Link>
           ))}
@@ -45,3 +43,11 @@ export default function BooksTable({ books }: { books: Book[] }) {
     </div>
   );
 }
+
+const BookTH = ({ children }: { children: ReactNode }) => {
+  return <th className="py-2 px-4 border-b">{children}</th>;
+};
+
+const BookTD = ({ children }: { children: ReactNode }) => {
+  return <td className="py-2 px-4 border-b text-center">{children}</td>;
+};

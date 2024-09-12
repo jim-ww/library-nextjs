@@ -11,7 +11,7 @@ export async function login(userId: number, role: UserRole) {
   redirect('/');
 }
 
-export async function logout() {
-  await deleteSession();
+export function logout() {
+  deleteSession();
   redirect('/login');
 }
