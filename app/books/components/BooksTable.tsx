@@ -1,53 +1,43 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { BookStatus, type Book } from '../../lib/definitions';
-import Link from 'next/link';
-import type { ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
+import type { Book } from '../../lib/definitions';
 
 export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
-  const searchParams = useSearchParams();
-  const inHand = searchParams.get('inHand');
+  const router = useRouter();
 
-  const filteredBooks =
-    inHand === 'true'
-      ? books.filter((book: Book) => book.state.status == BookStatus.Borrowed)
-      : books;
+  const handleRowClick = (id: number) => {
+    router.push(`/books/${id}`);
+  };
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full bg-white">
+      <table className="min-w-full bg-white border-collapse border border-gray-200">
         <thead>
           <tr>
-            <BookTH>Title</BookTH>
-            <BookTH>Author</BookTH>
-            <BookTH>Status</BookTH>
-            <BookTH>Borrow date</BookTH>
-            <BookTH>Return date</BookTH>
+            <th className="py-2 px-4 border-b">Title</th>
+            <th className="py-2 px-4 border-b">Author</th>
+            <th className="py-2 px-4 border-b">Status</th>
+            <th className="py-2 px-4 border-b">Borrow Date</th>
+            <th className="py-2 px-4 border-b">Return Date</th>
           </tr>
         </thead>
         <tbody>
-          {filteredBooks.map((book) => (
-            <Link key={book.id} href={`/books/${book.id}`}>
-              <tr key={book.id}>
-                <BookTD key={book.id}>{book.title}</BookTD>
-                <BookTD key={book.id}>{book.author}</BookTD>
-                <BookTD key={book.id}>{book.state.status}</BookTD>
-                <BookTD key={book.id}>{book.state.borrowDate}</BookTD>
-                <BookTD key={book.id}>{book.state.returnDate}</BookTD>
-              </tr>
-            </Link>
+          {books.map((book) => (
+            <tr
+              key={book.id}
+              onClick={() => handleRowClick(book.id)}
+              className="cursor-pointer hover:bg-gray-100"
+            >
+              <td className="py-2 px-4 border-b">{book.title}</td>
+              <td className="py-2 px-4 border-b">{book.author}</td>
+              <td className="py-2 px-4 border-b">{book.state.status}</td>
+              <td className="py-2 px-4 border-b">{book.state.borrowDate}</td>
+              <td className="py-2 px-4 border-b">{book.state.returnDate}</td>
+            </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
 }
-
-const BookTH = ({ children }: { children: ReactNode }) => {
-  return <th className="py-2 px-4 border-b">{children}</th>;
-};
-
-const BookTD = ({ children }: { children: ReactNode }) => {
-  return <td className="py-2 px-4 border-b text-center">{children}</td>;
-};
