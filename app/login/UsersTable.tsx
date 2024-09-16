@@ -35,7 +35,7 @@ export default function UsersTable({
               <TableData>
                 <button
                   onClick={() => handleLogin(user.id, user.role)}
-                  className="bg-blue-500 text-white p-2 rounded"
+                  className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white p-2 rounded"
                 >
                   Login
                 </button>

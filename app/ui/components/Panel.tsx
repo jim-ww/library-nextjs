@@ -22,11 +22,10 @@ function UserProfile({ user }: Readonly<{ user: User }>) {
       <p className="font-semibold text-xs">
         {(user.role + ' ROLE').toUpperCase()}
       </p>
-      <div>
+      <div className="flex">
         <span className="font-bold">{user.name}</span>
-        <button type="button" className="bg-black">
-          <ChevronDownIcon />
-        </button>
+        {/* TODO implement UserProfile options button */}
+        <ChevronDownIcon className="w-6 h-6 ml-auto" />
       </div>
     </section>
   );
