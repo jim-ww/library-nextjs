@@ -30,7 +30,7 @@ export function NavBar() {
           <InboxStackIcon className={itemIconClassname} />
         </ListItem>
 
-        <ListItem link="/users?type=administrator" text="All administrators">
+        <ListItem link="/users?role=admin" text="All administrators">
           <UsersIcon className={itemIconClassname} />
         </ListItem>
       </ul>

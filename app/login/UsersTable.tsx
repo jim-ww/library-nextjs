@@ -10,8 +10,6 @@ export default function UsersTable({
   users: User[];
   handleLogin: (userId: number, role: UserRole) => void;
 }>) {
-  const tdClassname = '';
-
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full h-2/6 border-collapse">
