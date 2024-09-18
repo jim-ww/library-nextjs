@@ -16,8 +16,8 @@ export function Panel() {
 
   return (
     <div className="bg-blue-950 whitespace-nowrap sticky top-0 lg:top-auto w-screen lg:w-auto lg:h-screen">
-      <div className="flex lg:flex-col items-center lg:h-full">
-        <h1 className="text-white text-lg md:text-xl lg:text-2xl font-bold p-2">
+      <div className="flex lg:flex-col items-center lg:items-start  lg:h-full">
+        <h1 className="text-white text-lg md:text-xl lg:text-2xl font-bold p-2 lg:p-5 ">
           Next Library
         </h1>
 
