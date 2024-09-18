@@ -15,7 +15,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased flex`}>
+      <body className={`${inter.className} antialiased lg:flex`}>
         <Panel />
         {children}
       </body>
