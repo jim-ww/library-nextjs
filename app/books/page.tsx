@@ -1,5 +1,5 @@
 import { type Book } from '../lib/definitions';
-import { getBooks } from '../lib/actions/books';
+import { getBooks } from '../lib/data-access/books';
 import BooksTable from './components/BooksTable';
 
 export default async function Page() {

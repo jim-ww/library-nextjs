@@ -1,7 +1,7 @@
 export enum UserRole {
-  Student = "student",
-  Teacher = "teacher",
-  Admin = "admin",
+  Student = 'student',
+  Teacher = 'teacher',
+  Admin = 'admin',
 }
 
 export type User = {
@@ -13,17 +13,32 @@ export type User = {
 };
 
 export enum BookStatus {
-  Assigned = "assigned",
-  Borrowed = "borrowed",
-  Available = "available",
+  Assigned = 'assigned',
+  Borrowed = 'borrowed',
+  Available = 'available',
 }
 
-export type BookState = {
-  status: BookStatus;
-  userId: number | null;
-  borrowDate: string | null;
-  returnDate: string | null;
+export type BookStateAvailable = {
+  status: BookStatus.Available;
 };
+
+export type BookStateAssigned = {
+  status: BookStatus.Assigned;
+  userId: number;
+  expectedReturnDate?: string;
+};
+
+export type BookStateBorrowed = {
+  status: BookStatus.Borrowed;
+  userId: number;
+  borrowDate: string;
+  returnDate: string;
+};
+
+export type BookState =
+  | BookStateAvailable
+  | BookStateAssigned
+  | BookStateBorrowed;
 
 export type Book = {
   id: number;

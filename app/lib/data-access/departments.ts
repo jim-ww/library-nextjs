@@ -1,5 +1,7 @@
 import type { Department } from '../definitions';
 
+export const revalidate = 3600; // invalidate every hour
+
 const collectionUrl = 'http://localhost:3000/api/departments';
 const singleEntityUrl = (id: number) =>
   `http://localhost:3000/api/departments/${id}`;

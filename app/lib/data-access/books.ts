@@ -1,5 +1,7 @@
 'server-only';
 
+export const revalidate = 3600; // invalidate every hour
+
 import type { Book } from '../definitions';
 
 const collectionUrl = 'http://localhost:3000/api/books'; //"http://localhost:8090/api/collections/books/records?page=0&perPage=10",

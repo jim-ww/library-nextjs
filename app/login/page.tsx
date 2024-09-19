@@ -1,4 +1,4 @@
-import { login } from '../lib/actions/auth';
+import { login } from '../lib/data-access/auth';
 import { users } from '../lib/mock_data';
 import UsersTable from './UsersTable';
 

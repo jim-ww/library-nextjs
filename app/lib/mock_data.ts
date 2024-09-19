@@ -10,6 +10,8 @@ const departments: Department[] = [
   { id: 1, name: 'Computer Science' },
   { id: 2, name: 'Software Engineering' },
   { id: 3, name: 'Information Technology' },
+  { id: 4, name: 'Data Science' },
+  { id: 5, name: 'Cybersecurity' },
 ];
 
 const users: User[] = [
@@ -48,6 +50,27 @@ const users: User[] = [
     role: UserRole.Admin,
     departmentIDs: [],
   },
+  {
+    id: 6,
+    name: 'Clara Evans',
+    email: 'clara.evans@example.com',
+    role: UserRole.Student,
+    departmentIDs: [departments[3].id],
+  },
+  {
+    id: 7,
+    name: 'David Green',
+    email: 'david.green@example.com',
+    role: UserRole.Teacher,
+    departmentIDs: [departments[2].id, departments[4].id],
+  },
+  {
+    id: 8,
+    name: 'Eve White',
+    email: 'eve.white@example.com',
+    role: UserRole.Student,
+    departmentIDs: [departments[4].id],
+  },
 ];
 
 const books: Book[] = [
@@ -70,8 +93,7 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[1].id,
-      borrowDate: null,
-      returnDate: null,
+      expectedReturnDate: '2024-09-01',
     },
     departmentIDs: [departments[1].id],
   },
@@ -81,9 +103,6 @@ const books: Book[] = [
     author: 'Robert C. Martin',
     state: {
       status: BookStatus.Available,
-      userId: null,
-      borrowDate: null,
-      returnDate: null,
     },
     departmentIDs: [departments[0].id, departments[1].id],
   },
@@ -105,9 +124,6 @@ const books: Book[] = [
     author: 'Steve McConnell',
     state: {
       status: BookStatus.Available,
-      userId: null,
-      borrowDate: null,
-      returnDate: null,
     },
     departmentIDs: [departments[0].id],
   },
@@ -118,8 +134,7 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[1].id,
-      borrowDate: null,
-      returnDate: null,
+      expectedReturnDate: '2024-09-05',
     },
     departmentIDs: [departments[0].id],
   },
@@ -129,9 +144,6 @@ const books: Book[] = [
     author: 'Eric Freeman',
     state: {
       status: BookStatus.Available,
-      userId: null,
-      borrowDate: null,
-      returnDate: null,
     },
     departmentIDs: [departments[2].id],
   },
@@ -153,9 +165,6 @@ const books: Book[] = [
     author: 'Kyle Simpson',
     state: {
       status: BookStatus.Available,
-      userId: null,
-      borrowDate: null,
-      returnDate: null,
     },
     departmentIDs: [departments[0].id, departments[2].id],
   },
@@ -166,8 +175,6 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[0].id,
-      borrowDate: null,
-      returnDate: null,
     },
     departmentIDs: [departments[1].id],
   },
@@ -189,9 +196,6 @@ const books: Book[] = [
     author: 'Gayle Laakmann McDowell',
     state: {
       status: BookStatus.Available,
-      userId: null,
-      borrowDate: null,
-      returnDate: null,
     },
     departmentIDs: [departments[0].id, departments[1].id],
   },
@@ -209,13 +213,12 @@ const books: Book[] = [
   },
   {
     id: 14,
-    title: 'The Clean Coder',
+    title: 'The Clean Code',
     author: 'Robert C. Martin',
     state: {
       status: BookStatus.Assigned,
       userId: users[2].id,
-      borrowDate: null,
-      returnDate: null,
+      expectedReturnDate: '2024-09-15',
     },
     departmentIDs: [departments[2].id],
   },
@@ -225,9 +228,165 @@ const books: Book[] = [
     author: 'Kent Beck',
     state: {
       status: BookStatus.Available,
-      userId: null,
-      borrowDate: null,
-      returnDate: null,
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 16,
+    title: 'Deep Learning',
+    author: 'Ian Goodfellow',
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[5].id,
+      borrowDate: '2024-08-12',
+      returnDate: '2024-08-30',
+    },
+    departmentIDs: [departments[3].id],
+  },
+  {
+    id: 17,
+    title: 'Artificial Intelligence: A Modern Approach',
+    author: 'Stuart Russell',
+    state: {
+      status: BookStatus.Assigned,
+      userId: users[6].id,
+      expectedReturnDate: '2024-09-01',
+    },
+    departmentIDs: [departments[4].id],
+  },
+  {
+    id: 18,
+    title: 'Designing Data-Intensive Applications',
+    author: 'Martin Kleppmann',
+    state: {
+      status: BookStatus.Available,
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 19,
+    title: 'Deep Learning',
+    author: 'Ian Goodfellow',
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[1].id,
+      borrowDate: '2024-08-10',
+      returnDate: '2024-08-20',
+    },
+    departmentIDs: [departments[1].id],
+  },
+  {
+    id: 20,
+    title: 'Artificial Intelligence: A Modern Approach',
+    author: 'Stuart Russell',
+    state: {
+      status: BookStatus.Assigned,
+      userId: users[3].id,
+      expectedReturnDate: '2024-09-05',
+    },
+    departmentIDs: [departments[2].id],
+  },
+  {
+    id: 21,
+    title: 'Python Crash Course',
+    author: 'Eric Matthes',
+    state: {
+      status: BookStatus.Available,
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 22,
+    title: 'Learning React',
+    author: 'Alex Banks',
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[2].id,
+      borrowDate: '2024-08-05',
+      returnDate: '2024-08-18',
+    },
+    departmentIDs: [departments[1].id],
+  },
+  {
+    id: 23,
+    title: 'Eloquent JavaScript',
+    author: 'Marijn Haverbeke',
+    state: {
+      status: BookStatus.Available,
+    },
+    departmentIDs: [departments[0].id, departments[2].id],
+  },
+  {
+    id: 24,
+    title: 'The Go Programming Language',
+    author: 'Alan Donovan',
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[3].id,
+      borrowDate: '2024-08-01',
+      returnDate: '2024-08-15',
+    },
+    departmentIDs: [departments[2].id],
+  },
+  {
+    id: 25,
+    title: 'Grokking Algorithms',
+    author: 'Aditya Y. Bhargava',
+    state: {
+      status: BookStatus.Available,
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 26,
+    title: 'Fluent Python',
+    author: 'Luciano Ramalho',
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[2].id,
+      borrowDate: '2024-07-29',
+      returnDate: '2024-08-12',
+    },
+    departmentIDs: [departments[1].id],
+  },
+  {
+    id: 27,
+    title: 'Pro Git',
+    author: 'Scott Chacon',
+    state: {
+      status: BookStatus.Available,
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 28,
+    title: 'The Rust Programming Language',
+    author: 'Steve Klabnik',
+    state: {
+      status: BookStatus.Borrowed,
+      userId: users[3].id,
+      borrowDate: '2024-07-30',
+      returnDate: '2024-08-10',
+    },
+    departmentIDs: [departments[2].id],
+  },
+  {
+    id: 29,
+    title: 'JavaScript: The Good Parts',
+    author: 'Douglas Crockford',
+    state: {
+      status: BookStatus.Assigned,
+      userId: users[4].id,
+      expectedReturnDate: '2024-08-25',
+    },
+    departmentIDs: [departments[0].id],
+  },
+  {
+    id: 30,
+    title: 'Structure and Interpretation of Computer Programs',
+    author: 'Harold Abelson',
+    state: {
+      status: BookStatus.Available,
     },
     departmentIDs: [departments[0].id],
   },

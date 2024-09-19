@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUsers } from '../actions/users';
+import { getUsers } from '../data-access/users';
 import type { User } from '../definitions';
 
 export function useUsers() {
