@@ -17,19 +17,20 @@ import { useState, type ReactNode } from 'react';
 export function Panel({ user }: Readonly<{ user: User }>) {
   const [mobileMenuClosed, setMobileMenuClosed] = useState(true);
   const [userProfileClosed, setUserProfileClosed] = useState(true);
+  // const { user, loading, error } = useCurrentUser(); //{ user }: Readonly<{ user: User }>
 
   const iconSize = 'size-6';
 
   return (
     <>
-      <div className="bg-blue-950 whitespace-nowrap sticky top-0 lg:top-auto md:w-screen lg:w-auto lg:h-screen">
-        <div className="flex lg:flex-col items-center lg:items-start  lg:h-full">
-          {/* // * Mobile menu button  */}
+      <div className="bg-blue-950 whitespace-nowrap md:w-screen lg:w-auto lg:h-screen">
+        <div className="flex lg:flex-col items-center lg:items-start lg:h-full">
+          {/* Mobile menu button */}
           <button
             type="button"
             aria-controls="menu"
-            aria-expanded="false"
-            className="md:hidden"
+            aria-expanded={!mobileMenuClosed}
+            className="md:hidden p-4"
             onClick={() => setMobileMenuClosed(!mobileMenuClosed)}
           >
             <Bars3Icon className={`${iconSize} text-white`} />
@@ -41,9 +42,10 @@ export function Panel({ user }: Readonly<{ user: User }>) {
 
           {user && (
             <>
+              {/* NavBar for desktop && tablets */}
               <NavBar classname="hidden md:inline" />
               <div className="flex-grow" />
-              <UserProfileBubble
+              <UserProfileBlock
                 user={user}
                 toggleUserProfileMenu={() =>
                   setUserProfileClosed(!userProfileClosed)
@@ -53,17 +55,19 @@ export function Panel({ user }: Readonly<{ user: User }>) {
           )}
         </div>
       </div>
-      {mobileMenuClosed || (
-        <div className="bg-blue-950 whitespace-nowrap absolute left-0 top-16 bottom-0 p-2">
+
+      {!mobileMenuClosed && (
+        <div className="bg-blue-950 absolute left-0 top-16 bottom-0 p-2 z-50 w-full">
           <NavBar />
         </div>
       )}
-      {userProfileClosed || <UserProfileOptions />}
+
+      {!userProfileClosed && <UserProfileOptions />}
     </>
   );
 }
 
-function UserProfileBubble({
+function UserProfileBlock({
   user,
   toggleUserProfileMenu,
 }: Readonly<{ user: User; toggleUserProfileMenu: () => void }>) {
@@ -80,8 +84,8 @@ function UserProfileBubble({
           onClick={toggleUserProfileMenu}
         >
           <span className="font-bold">{user.name}</span>
-          <ChevronDownIcon className={'size-6 ml-auto hidden md:inline'} />
-          <ChevronLeftIcon className={'size-6 inline md:hidden ml-1 '} />
+          <ChevronDownIcon className="size-6 ml-auto hidden md:inline" />
+          <ChevronLeftIcon className="size-6 inline md:hidden ml-1 " />
         </button>
       </div>
     </div>
@@ -89,8 +93,15 @@ function UserProfileBubble({
 }
 
 function UserProfileOptions() {
-  // TODO implement
-  return <div>User profile options here...</div>;
+  return (
+    <div className="bg-white shadow-lg p-4">
+      <ul>
+        <li>
+          <button className="w-full text-left p-2">Logout</button>
+        </li>
+      </ul>
+    </div>
+  );
 }
 
 function NavBar({ classname }: Readonly<{ classname?: string }>) {
