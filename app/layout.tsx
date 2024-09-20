@@ -4,6 +4,7 @@ import { inter } from '@/app/ui/fonts';
 import { Panel } from './ui/components/Panel';
 import { users } from './lib/mock_data';
 import type { User } from './lib/definitions';
+import { getCurrentUser } from './lib/data-access/users';
 
 export const metadata: Metadata = {
   title: 'Next Library',
@@ -15,7 +16,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user: User | null = users[0]; // TODO await getCurrentUser();
+  const user: User | null = users[0]; // TODO
+  const testUser = await getCurrentUser();
 
   return (
     <html lang="en">

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import type { Book } from '../../lib/definitions';
+import { BookStatus, type Book } from '../../lib/definitions';
 import type { ReactNode } from 'react';
 
 export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
@@ -32,8 +32,18 @@ export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
             <TableData>{book.title}</TableData>
             <TableData>{book.author}</TableData>
             <TableData>{book.state.status}</TableData>
-            <TableData>{book.state.borrowDate}</TableData>
-            <TableData>{book.state.returnDate}</TableData>
+
+            {book.state.status == BookStatus.Borrowed ? (
+              <>
+                <TableData>{book.state.borrowDate}</TableData>
+                <TableData>{book.state.returnDate}</TableData>
+              </>
+            ) : (
+              <>
+                <TableData classname="pl-12">-</TableData>
+                <TableData classname="pl-12">-</TableData>
+              </>
+            )}
           </tr>
         ))}
       </tbody>
@@ -45,6 +55,9 @@ function TableHead({ text }: Readonly<{ text: string }>) {
   return <th className="border p-2 text-start">{text}</th>;
 }
 
-function TableData({ children }: Readonly<{ children: ReactNode }>) {
-  return <td className="p-2">{children}</td>;
+function TableData({
+  classname,
+  children,
+}: Readonly<{ classname?: string; children: ReactNode }>) {
+  return <td className={`p-2 ${classname}`}>{children}</td>;
 }

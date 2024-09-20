@@ -23,7 +23,7 @@ export function Panel({ user }: Readonly<{ user: User }>) {
 
   return (
     <>
-      <div className="bg-blue-950 whitespace-nowrap md:w-screen lg:w-auto lg:h-screen">
+      <div className="bg-blue-950 whitespace-nowrap md:w-screen lg:w-auto lg:h-screen sticky top-0 left-0">
         <div className="flex lg:flex-col items-center lg:items-start lg:h-full">
           {/* Mobile menu button */}
           <button
@@ -122,7 +122,7 @@ function NavBar({ classname }: Readonly<{ classname?: string }>) {
           <DocumentTextIcon className={itemIconClassname} />
         </ListItem>
 
-        <ListItem link="/books?inHand=true" text="Books in hand">
+        <ListItem link="/books?inHand=1" text="Books in hand">
           <InboxStackIcon className={itemIconClassname} />
         </ListItem>
 
