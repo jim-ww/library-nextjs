@@ -5,6 +5,7 @@ import { Panel } from './ui/components/Panel';
 import { users } from './lib/mock_data';
 import type { User } from './lib/definitions';
 import { getCurrentUser } from './lib/data-access/users';
+import { logout } from './lib/data-access/auth';
 
 export const metadata: Metadata = {
   title: 'Next Library',
@@ -16,8 +17,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user: User | null = users[0]; // TODO
-  const testUser = await getCurrentUser();
+  const user: User | null = await getCurrentUser();
 
   return (
     <html lang="en">

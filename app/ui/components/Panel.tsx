@@ -1,5 +1,6 @@
 'use client';
 
+import { logout } from '@/app/lib/data-access/auth';
 import type { User } from '@/app/lib/definitions';
 import {
   Bars3Icon,
@@ -14,10 +15,14 @@ import {
 import Link from 'next/link';
 import { useState, type ReactNode } from 'react';
 
-export function Panel({ user }: Readonly<{ user: User }>) {
+export function Panel({ user }: Readonly<{ user: User | null }>) {
   const [mobileMenuClosed, setMobileMenuClosed] = useState(true);
   const [userProfileClosed, setUserProfileClosed] = useState(true);
   // const { user, loading, error } = useCurrentUser(); //{ user }: Readonly<{ user: User }>
+
+  if (!user) {
+    return;
+  }
 
   const iconSize = 'size-6';
 
@@ -97,7 +102,9 @@ function UserProfileOptions() {
     <div className="bg-white shadow-lg p-4">
       <ul>
         <li>
-          <button className="w-full text-left p-2">Logout</button>
+          <button className="w-full text-left p-2" onClick={() => logout()}>
+            Logout
+          </button>
         </li>
       </ul>
     </div>

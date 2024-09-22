@@ -1,4 +1,4 @@
-'use client'; // TODO
+'use client';
 
 import type { ReactNode } from 'react';
 import type { User, UserRole } from '../lib/definitions';
