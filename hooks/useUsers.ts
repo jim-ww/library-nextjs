@@ -1,6 +1,8 @@
+'use client';
+
+import { getUsers } from '@/app/lib/data-access/users';
+import type { User } from '@/app/lib/definitions';
 import { useEffect, useState } from 'react';
-import { getUsers } from '../data-access/users';
-import type { User } from '../definitions';
 
 export function useUsers() {
   const [users, setUsers] = useState<User[] | null>(null);

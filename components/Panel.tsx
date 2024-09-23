@@ -1,7 +1,7 @@
 'use client';
 
-import { logout } from '@/app/lib/data-access/auth';
-import type { User } from '@/app/lib/definitions';
+import { logout } from '@/app/lib/auth/auth';
+import { UserRole, type User } from '@/app/lib/definitions';
 import {
   Bars3Icon,
   BuildingLibraryIcon,
@@ -18,13 +18,10 @@ import { useState, type ReactNode } from 'react';
 export function Panel({ user }: Readonly<{ user: User | null }>) {
   const [mobileMenuClosed, setMobileMenuClosed] = useState(true);
   const [userProfileClosed, setUserProfileClosed] = useState(true);
-  // const { user, loading, error } = useCurrentUser(); //{ user }: Readonly<{ user: User }>
 
   if (!user) {
     return;
   }
-
-  const iconSize = 'size-6';
 
   return (
     <>
@@ -38,7 +35,7 @@ export function Panel({ user }: Readonly<{ user: User | null }>) {
             className="md:hidden p-4"
             onClick={() => setMobileMenuClosed(!mobileMenuClosed)}
           >
-            <Bars3Icon className={`${iconSize} text-white`} />
+            <Bars3Icon className="size-6 text-white" />
           </button>
 
           <h1 className="text-white text-lg md:text-xl lg:text-2xl font-bold p-2 lg:p-5 lg:pb-4">
@@ -48,7 +45,7 @@ export function Panel({ user }: Readonly<{ user: User | null }>) {
           {user && (
             <>
               {/* NavBar for desktop && tablets */}
-              <NavBar classname="hidden md:inline" />
+              <NavBar classname="hidden md:inline" user={user} />
               <div className="flex-grow" />
               <UserProfileBlock
                 user={user}
@@ -63,7 +60,7 @@ export function Panel({ user }: Readonly<{ user: User | null }>) {
 
       {!mobileMenuClosed && (
         <div className="bg-blue-950 absolute left-0 top-16 bottom-0 p-2 z-50 w-full">
-          <NavBar />
+          <NavBar user={user} />
         </div>
       )}
 
@@ -111,7 +108,10 @@ function UserProfileOptions() {
   );
 }
 
-function NavBar({ classname }: Readonly<{ classname?: string }>) {
+function NavBar({
+  classname,
+  user,
+}: Readonly<{ classname?: string; user?: User }>) {
   const itemIconClassname = 'size-6';
 
   return (
@@ -133,9 +133,11 @@ function NavBar({ classname }: Readonly<{ classname?: string }>) {
           <InboxStackIcon className={itemIconClassname} />
         </ListItem>
 
-        <ListItem link="/users?role=admin" text="All administrators">
-          <UsersIcon className={itemIconClassname} />
-        </ListItem>
+        {user?.role === UserRole.Admin && (
+          <ListItem link="/users?role=admin" text="All administrators">
+            <UsersIcon className={itemIconClassname} />
+          </ListItem>
+        )}
       </ul>
     </nav>
   );

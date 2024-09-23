@@ -1,7 +1,7 @@
 'use client';
 
+import { getCurrentUser } from '@/app/lib/data-access/users';
 import { useEffect, useState } from 'react';
-import { getCurrentUser } from '../data-access/users';
 
 export const useCurrentUser = () => {
   const [user, setUser] = useState<any>(null);

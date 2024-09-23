@@ -1,11 +1,11 @@
 'server-only';
 
-export const revalidate = 3600; // invalidate every hour
+export const revalidate = 3600; // * invalidate every hour
 
 import type { Book } from '../definitions';
 
-const collectionUrl = 'http://localhost:3000/api/books'; //"http://localhost:8090/api/collections/books/records?page=0&perPage=10",
-const singleEntityUrl = (id: number) => `http://localhost:3000/api/books/${id}`; //http://localhost:8090/api/collections/books/records?id=${id}
+const collectionUrl = 'http://localhost:3000/api/books';
+const singleEntityUrl = (id: number) => `http://localhost:3000/api/books/${id}`;
 
 export const getBooks: () => Promise<Book[]> = async () => {
   const res = await fetch(collectionUrl);

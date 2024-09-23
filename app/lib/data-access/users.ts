@@ -1,14 +1,12 @@
 'server-only';
 
-export const revalidate = 3600; // invalidate every hour
+export const revalidate = 3600; // * invalidate every hour
 
+import { getSession } from '../auth/session';
 import { UserRole, type User } from '../definitions';
-import { getSession } from '../session';
-
-// TODO configure caching
 
 const collectionUrl = `http://localhost:3000/api/users`;
-const singleEntityUrl = (id: number) => `http://localhost:3000/api/users/${id}`; //http://localhost:8090/api/collections/users/records?id=${id}
+const singleEntityUrl = (id: number) => `http://localhost:3000/api/users/${id}`;
 
 export const getCurrentUser: () => Promise<User | null> = async () => {
   const session = await getSession();
@@ -31,9 +29,8 @@ export const getUser: (id: number) => Promise<User | null> = async (
 
 export const getUsers = async () => {
   const session = await getSession();
-  if (!session) return Promise.reject(new Error('User is not authenticated'));
+  if (!session) return null;
 
-  // TODO test
   if (session.role !== UserRole.Admin || UserRole.Teacher) return null;
 
   const res = await fetch(collectionUrl);

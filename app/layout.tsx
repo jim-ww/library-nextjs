@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
-import '@/app/ui/global.css';
-import { inter } from '@/app/ui/fonts';
-import { Panel } from './ui/components/Panel';
-import { users } from './lib/mock_data';
+import '@/styles/global.css';
+import { Panel } from '../components/Panel';
 import type { User } from './lib/definitions';
 import { getCurrentUser } from './lib/data-access/users';
-import { logout } from './lib/data-access/auth';
+import { inter } from '@/styles/fonts';
 
 export const metadata: Metadata = {
   title: 'Next Library',

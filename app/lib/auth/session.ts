@@ -1,8 +1,9 @@
+import 'server-only';
+
 import { SessionPayload, type UserRole } from '@/app/lib/definitions';
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { NextResponse, type NextRequest } from 'next/server';
-import 'server-only';
 
 const secretKey = process.env.SESSION_SECRET;
 if (!secretKey) {

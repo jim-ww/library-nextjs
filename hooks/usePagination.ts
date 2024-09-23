@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 
 function usePagination(totalItems: number, itemsPerPage: number) {

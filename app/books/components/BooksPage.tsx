@@ -1,10 +1,10 @@
 'use client';
 
-import BooksTable from './components/BooksTable';
-import { useBooks } from '../lib/hooks/useBooks';
-import type { Book } from '../lib/definitions';
+import BooksTable from './BooksTable';
+import type { Book } from '../../lib/definitions';
+import { useBooks } from '@/hooks/useBooks';
 
-export default function BooksClient({
+export default function BooksPage({
   booksProp,
 }: Readonly<{ booksProp: Book[] }>) {
   const { books, inHand } = useBooks(booksProp);

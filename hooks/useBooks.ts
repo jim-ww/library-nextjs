@@ -1,6 +1,6 @@
+import { BookStatus, type Book } from '@/app/lib/definitions';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
-import { BookStatus, type Book } from '../../lib/definitions';
 
 export function useBooks(initialBooks: Book[]) {
   const params = useSearchParams();
