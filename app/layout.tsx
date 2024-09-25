@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '@/styles/global.css';
-import { Panel } from '../components/Panel';
+import { Panel } from '../components/Panel/Panel';
 import type { User } from './lib/definitions';
 import { getCurrentUser } from './lib/data-access/users';
 import { inter } from '@/styles/fonts';
@@ -15,7 +15,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user: User | null = await getCurrentUser();
+  const user: User | null = await getCurrentUser(); // TODO ? use context or Zustand
 
   return (
     <html lang="en">
