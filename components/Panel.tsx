@@ -59,7 +59,7 @@ export function Panel({ user }: Readonly<{ user: User | null }>) {
       </div>
 
       {!mobileMenuClosed && (
-        <div className="bg-blue-950 absolute left-0 top-16 bottom-0 p-2 z-50 w-full">
+        <div className="bg-blue-950 absolute left-0 top-16 bottom-0 p-2 z-50 w-full animate-slide-from-left md:hidden">
           <NavBar user={user} />
         </div>
       )}
