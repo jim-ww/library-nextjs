@@ -7,17 +7,22 @@ import {
   BuildingLibraryIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
   DocumentTextIcon,
   InboxStackIcon,
   Squares2X2Icon,
   UsersIcon,
 } from '@heroicons/react/20/solid';
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
 
 export function Panel({ user }: Readonly<{ user: User | null }>) {
   const [mobileMenuClosed, setMobileMenuClosed] = useState(true);
   const [userProfileClosed, setUserProfileClosed] = useState(true);
+  const router = useRouter();
 
   if (!user) {
     return;
@@ -26,7 +31,7 @@ export function Panel({ user }: Readonly<{ user: User | null }>) {
   return (
     <>
       <div className="bg-blue-950 whitespace-nowrap md:w-screen lg:w-auto lg:h-screen sticky top-0 left-0">
-        <div className="flex lg:flex-col items-center lg:items-start lg:h-full">
+        <div className="flex lg:flex-col items-center lg:items-start lg:h-full ">
           {/* Mobile menu button */}
           <button
             type="button"
@@ -47,10 +52,17 @@ export function Panel({ user }: Readonly<{ user: User | null }>) {
               {/* NavBar for desktop && tablets */}
               <NavBar classname="hidden md:inline" user={user} />
               <div className="flex-grow" />
+
+              <UserProfileOptions
+                router={router}
+                userProfileClosed={userProfileClosed}
+              />
+
               <UserProfileBlock
                 user={user}
-                toggleUserProfileMenu={() =>
-                  setUserProfileClosed(!userProfileClosed)
+                userProfileClosed={userProfileClosed}
+                toggleUserProfileMenu={
+                  () => setUserProfileClosed(!userProfileClosed) // ? handle animation for user options separately based on user input
                 }
               />
             </>
@@ -63,20 +75,23 @@ export function Panel({ user }: Readonly<{ user: User | null }>) {
           <NavBar user={user} />
         </div>
       )}
-
-      {!userProfileClosed && <UserProfileOptions />}
     </>
   );
 }
 
 function UserProfileBlock({
   user,
+  userProfileClosed,
   toggleUserProfileMenu,
-}: Readonly<{ user: User; toggleUserProfileMenu: () => void }>) {
+}: Readonly<{
+  user: User;
+  userProfileClosed: boolean;
+  toggleUserProfileMenu: () => void;
+}>) {
   return (
     <div id="menu" className="flex lg:flex-col lg:w-full">
-      {/* User Profile */}
-      <div className="flex flex-col bg-yellow-500 text-black p-4 lg:w-full">
+      {/* //* User Profile */}
+      <div className="flex flex-col bg-yellow-500 text-black p-4 lg:w-full z-20">
         <p className="font-semibold text-xs">
           {(user.role + ' ROLE').toUpperCase()}
         </p>
@@ -86,25 +101,44 @@ function UserProfileBlock({
           onClick={toggleUserProfileMenu}
         >
           <span className="font-bold">{user.name}</span>
-          <ChevronDownIcon className="size-6 ml-auto hidden md:inline" />
-          <ChevronLeftIcon className="size-6 inline md:hidden ml-1 " />
+          {userProfileClosed ? (
+            <>
+              <ChevronUpIcon className="size-6 ml-auto hidden md:inline" />
+              <ChevronRightIcon className="size-6 inline md:hidden ml-1 " />
+            </>
+          ) : (
+            <>
+              <ChevronDownIcon className="size-6 ml-auto hidden md:inline" />
+              <ChevronLeftIcon className="size-6 inline md:hidden ml-1 " />
+            </>
+          )}
         </button>
       </div>
     </div>
   );
 }
 
-function UserProfileOptions() {
+function UserProfileOptions({
+  router,
+  userProfileClosed,
+}: Readonly<{ router: AppRouterInstance; userProfileClosed: boolean }>) {
+  const itemClassname = 'w-full p-2 hover:bg-yellow-600 text-center';
+
+  const animation = userProfileClosed
+    ? 'lg:animate-slide-to-bottom'
+    : 'lg:animate-slide-from-bottom';
+
   return (
-    <div className="bg-white shadow-lg p-4">
-      <ul>
-        <li>
-          <button className="w-full text-left p-2" onClick={() => logout()}>
-            Logout
-          </button>
-        </li>
-      </ul>
-    </div>
+    <ul
+      className={`bg-yellow-500 font-medium shadow-lg p-4 z-10 w-full ${animation}`}
+    >
+      <li className={itemClassname}>
+        <button onClick={() => router.push('/profile')}>My profile</button>
+      </li>
+      <li className={itemClassname}>
+        <button onClick={() => logout()}>Logout</button>
+      </li>
+    </ul>
   );
 }
 
