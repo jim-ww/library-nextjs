@@ -1,10 +1,5 @@
 import { type User } from '@/app/lib/definitions';
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronUpIcon,
-} from '@heroicons/react/20/solid';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid';
 
 export default function UserProfileBlock({
   user,
@@ -29,15 +24,9 @@ export default function UserProfileBlock({
         <div className="flex items-center">
           <span className="font-bold">{user.name}</span>
           {userProfileClosed ? (
-            <>
-              <ChevronUpIcon className="size-6 ml-auto hidden lg:inline" />
-              <ChevronRightIcon className="size-6 inline lg:hidden ml-1 " />
-            </>
+            <ChevronUpIcon className="size-6 ml-auto " />
           ) : (
-            <>
-              <ChevronDownIcon className="size-6 ml-auto hidden lg:inline" />
-              <ChevronLeftIcon className="size-6 inline lg:hidden ml-1 " />
-            </>
+            <ChevronDownIcon className="size-6 ml-auto " />
           )}
         </div>
       </div>

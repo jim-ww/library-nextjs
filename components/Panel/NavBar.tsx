@@ -17,7 +17,7 @@ export default function NavBar({
 
   return (
     <nav className={classname ?? ''}>
-      <ul className="text-white flex flex-col md:flex-row lg:flex-col ">
+      <ul className="text-white flex flex-col md:flex-row lg:flex-col  ">
         <ListItem link="/" text="Dashboard">
           <Squares2X2Icon className={iconClass} />
         </ListItem>
@@ -53,7 +53,7 @@ function ListItem({
     <li>
       <Link
         href={link}
-        className=" hover:bg-cyan-800 flex md:flex-col md:items-center lg:items-start lg:flex-row gap-1 md:gap-2 p-2 lg:pl-5 lg:pr-14"
+        className=" hover:bg-cyan-800 flex md:flex-col md:items-center lg:items-start lg:flex-row gap-1 md:gap-2 p-2 lg:pl-5 lg:pr-14 "
       >
         {children}
         <span>{text}</span>
