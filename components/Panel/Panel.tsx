@@ -74,8 +74,8 @@ const MobileMenu = ({
 }) => {
   return (
     <div
-      className={`bg-blue-950 absolute left-0 top-16 bottom-0 p-2 h-full z-10 w-64 shadow-lg md:hidden ${
-        mobileMenuClosed ? 'animate-slide-to-left' : 'animate-slide-from-left'
+      className={`bg-blue-950 fixed left-0 top-16 bottom-0 p-2 h-full z-10 w-64 shadow-lg md:hidden transition-transform duration-300 ease-in-out ${
+        mobileMenuClosed ? '-translate-x-full' : 'translate-x-0'
       }`}
     >
       <NavBar user={user} />

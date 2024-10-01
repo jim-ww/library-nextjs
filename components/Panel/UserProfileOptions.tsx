@@ -17,12 +17,12 @@ export default function UserProfileOptions({
   const handleViewProfile = () => router.push('/profile');
 
   const animation = userProfileClosed
-    ? 'opacity-0 lg:opacity-100 lg:animate-slide-to-bottom'
-    : 'opacity-100 lg:animate-slide-from-bottom';
+    ? 'opacity-0 lg:translate-y-full'
+    : 'opacity-100 lg:translate-y-0';
 
   return (
     <ul
-      className={`bg-yellow-500 font-medium shadow-lg py-3 px-2 lg:p-4 lg:w-full rounded-lg lg:rounded-none lg:static absolute top-20 z-10 right-4  transition-opacity duration-500 ease-in-out ${animation}`}
+      className={`bg-yellow-500 font-medium shadow-lg py-3 px-2 lg:p-4 lg:w-full rounded-lg lg:rounded-none lg:static absolute top-20 z-10 right-4 transition-opacity duration-500 lg:opacity-100 lg:transition-transform ease-in-out  ${animation}`}
     >
       <ListItem text={'My profile'} onClick={handleViewProfile}>
         <UserIcon className="size-5" />
