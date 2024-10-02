@@ -29,8 +29,8 @@ export function Panel({ user }: Readonly<{ user: User | null }>) {
 
   return (
     <>
-      <div className="bg-blue-950 whitespace-nowrap md:w-screen lg:w-auto lg:h-screen sticky top-0 left-0">
-        <div className="flex lg:flex-col items-center lg:items-start lg:h-full z-20">
+      <div className="bg-blue-950 whitespace-nowrap md:w-screen lg:w-auto lg:h-screen sticky top-0 left-0 ">
+        <div className="flex lg:flex-col items-center lg:items-start lg:h-full z-20 lg:overflow-y-hidden">
           <MobileMenuButton
             setMobileMenuClosed={handleSetMobileMenuClosed}
             menuClosed={mobileMenuClosed}

@@ -15,7 +15,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user: User | null = await getCurrentUser(); // TODO ? use context or Zustand
+  const user: User | null = await getCurrentUser();
 
   return (
     <html lang="en">

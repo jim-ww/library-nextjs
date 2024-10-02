@@ -18,7 +18,7 @@ function usePagination(totalItems: number, itemsPerPage: number) {
     }
   }
 
-  return { currentPage, nextPage, prevPage, maxPage };
+  return { currentPage, setCurrentPage, nextPage, prevPage, maxPage };
 }
 
 export default usePagination;
