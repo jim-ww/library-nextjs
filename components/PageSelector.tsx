@@ -74,8 +74,8 @@ const PageSelector = ({
           <button
             key={index + number}
             onClick={() => setCurrentPage(number)}
-            className={`p-2 rounded-2xl ${
-              currentPage === number ? 'bg-gray-300 font-bold' : ''
+            className={` p-1 px-3 rounded-full ${
+              currentPage === number ? 'bg-slate-400 font-medium' : ''
             }`}
           >
             {number}

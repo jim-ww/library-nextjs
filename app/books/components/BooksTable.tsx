@@ -2,9 +2,20 @@
 
 import { useRouter } from 'next/navigation';
 import { BookStatus, type Book } from '../../lib/definitions';
-import { ReactNode, useState } from 'react';
+import { cache, ReactNode, useState } from 'react';
+import {
+  compareBooksByAuthor,
+  compareBooksByBorrowDate,
+  compareBooksByReturnDate,
+  compareBooksByState,
+  compareBooksByTitle,
+} from '@/app/lib/util/bookSort';
 
-export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
+export default function BooksTable({
+  books,
+  startIndex,
+  endIndex,
+}: Readonly<{ books: Book[]; startIndex: number; endIndex: number }>) {
   const router = useRouter();
   const [sortField, setSortField] = useState<
     'title' | 'author' | 'state' | 'borrowDate' | 'returnDate'
@@ -32,31 +43,19 @@ export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
 
     switch (sortField) {
       case 'title':
-        comparison = a.title.localeCompare(b.title);
+        comparison = compareBooksByTitle(a, b);
         break;
       case 'author':
-        comparison = a.author.localeCompare(b.author);
+        comparison = compareBooksByAuthor(a, b);
         break;
       case 'state':
         comparison = compareBooksByState(a, b);
         break;
       case 'borrowDate':
-        comparison =
-          new Date(
-            a.state.status === BookStatus.Borrowed ? a.state.borrowDate : ''
-          ).getTime() -
-          new Date(
-            b.state.status === BookStatus.Borrowed ? b.state.borrowDate : ''
-          ).getTime();
+        comparison = compareBooksByReturnDate(a, b);
         break;
       case 'returnDate':
-        comparison =
-          new Date(
-            a.state.status === BookStatus.Borrowed ? a.state.returnDate : ''
-          ).getTime() -
-          new Date(
-            b.state.status === BookStatus.Borrowed ? b.state.returnDate : ''
-          ).getTime();
+        comparison = compareBooksByBorrowDate(a, b);
         break;
       default:
         break;
@@ -65,23 +64,10 @@ export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
     return sortDirection === 'asc' ? comparison : -comparison;
   });
 
-  function compareBooksByState(bookA: Book, bookB: Book): number {
-    const stateOrder: Record<BookStatus, number> = {
-      [BookStatus.Borrowed]: 0,
-      [BookStatus.Assigned]: 1,
-      [BookStatus.Available]: 2,
-    };
-
-    return (
-      (stateOrder[bookA.state.status] || Infinity) -
-      (stateOrder[bookB.state.status] || Infinity)
-    );
-  }
-
   return (
     <table className="min-w-full h-2/6 border-collapse">
       <thead>
-        <tr className="cursor-pointer ">
+        <tr className="cursor-pointer">
           <TableHead text="Title" onClick={() => handleSortBy('title')} />
           <TableHead text="Author" onClick={() => handleSortBy('author')} />
           <TableHead text="Status" onClick={() => handleSortBy('state')} />
@@ -96,7 +82,7 @@ export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
         </tr>
       </thead>
       <tbody>
-        {sortedBooks.map((book) => (
+        {sortedBooks.slice(startIndex, endIndex).map((book) => (
           <tr
             key={book.id}
             onClick={() => handleRowClick(book.id)}
@@ -105,24 +91,43 @@ export default function BooksTable({ books }: Readonly<{ books: Book[] }>) {
             <TableData>{book.title}</TableData>
             <TableData>{book.author}</TableData>
             <TableData>{book.state.status}</TableData>
-
-            {book.state.status === BookStatus.Borrowed ? (
-              <>
-                <TableData>{book.state.borrowDate}</TableData>
-                <TableData>{book.state.returnDate}</TableData>
-              </>
-            ) : (
-              <>
-                <TableData className="pl-12">-</TableData>
-                <TableData className="pl-12">-</TableData>
-              </>
-            )}
+            <BookStatusTD book={book} />
           </tr>
         ))}
       </tbody>
     </table>
   );
 }
+
+const BookStatusTD = ({ book }: Readonly<{ book: Book }>) => {
+  switch (book.state.status) {
+    case BookStatus.Borrowed:
+      return (
+        <>
+          <TableData>{book.state.borrowDate}</TableData>
+          <TableData>{book.state.returnDate}</TableData>
+        </>
+      );
+    case BookStatus.Assigned:
+      return (
+        <>
+          <TableData className="pl-12">-</TableData>
+          {book.state.returnDate ? (
+            <TableData>{book.state.returnDate}</TableData>
+          ) : (
+            <TableData className="pl-12">-</TableData>
+          )}
+        </>
+      );
+    case BookStatus.Available:
+      return (
+        <>
+          <TableData className="pl-12">-</TableData>
+          <TableData className="pl-12">-</TableData>
+        </>
+      );
+  }
+};
 
 function TableHead({
   text,
@@ -139,5 +144,9 @@ function TableData({
   className,
   children,
 }: Readonly<{ className?: string; children: ReactNode }>) {
-  return <td className={`p-2 ${className}`}>{children}</td>;
+  return (
+    <td className={`p-2 ${className} truncate max-w-xs min-w-64`}>
+      {children}
+    </td>
+  );
 }

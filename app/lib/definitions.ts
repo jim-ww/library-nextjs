@@ -25,7 +25,7 @@ export type BookStateAvailable = {
 export type BookStateAssigned = {
   status: BookStatus.Assigned;
   userId: number;
-  expectedReturnDate?: string;
+  returnDate?: string;
 };
 
 export type BookStateBorrowed = {

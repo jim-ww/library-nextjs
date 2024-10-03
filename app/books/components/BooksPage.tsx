@@ -5,18 +5,23 @@ import type { Book } from '../../lib/definitions';
 import { useBooks } from '@/hooks/useBooks';
 import { ArrowDownTrayIcon } from '@heroicons/react/20/solid';
 import usePagination from '@/hooks/usePagination';
-import { useState } from 'react';
 import PageSelector from '@/components/PageSelector';
 
 export default function BooksPage({
   booksProp,
 }: Readonly<{ booksProp: Book[] }>) {
   const { books, inHand } = useBooks(booksProp);
-  const [maxBooksPerPage, setMaxBooksPerPage] = useState(10);
-  const { currentPage, setCurrentPage, nextPage, prevPage, maxPage } =
-    usePagination(books.length, maxBooksPerPage);
-  const startIndex = (currentPage - 1) * maxBooksPerPage;
-  const endIndex = Math.min(startIndex + maxBooksPerPage, books.length);
+  const {
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    setItemsPerPage,
+    nextPage,
+    prevPage,
+    maxPage,
+  } = usePagination(books.length);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, books.length);
 
   return (
     <div className="bg-orange-100 w-full min-h-screen p-10 flex flex-col">
@@ -38,12 +43,12 @@ export default function BooksPage({
             </button>
           </div>
         </div>
-        <BooksTable books={books.slice(startIndex, endIndex)} />
+        <BooksTable books={books} startIndex={startIndex} endIndex={endIndex} />
         <br />
         <div className="flex justify-center items-center gap-2">
           <RowsPerPageSelector
-            maxRowsPerPage={maxBooksPerPage}
-            setMaxRowsPerPage={setMaxBooksPerPage}
+            maxRowsPerPage={itemsPerPage}
+            setMaxRowsPerPage={setItemsPerPage}
           />
           <span>{`${startIndex + 1} - ${endIndex} of ${books.length}`}</span>
           <PageSelector

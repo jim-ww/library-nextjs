@@ -93,7 +93,7 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[1].id,
-      expectedReturnDate: '2024-09-01',
+      returnDate: '2024-09-01',
     },
     departmentIDs: [departments[1].id],
   },
@@ -134,7 +134,7 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[1].id,
-      expectedReturnDate: '2024-09-05',
+      returnDate: '2024-09-05',
     },
     departmentIDs: [departments[0].id],
   },
@@ -218,7 +218,7 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[2].id,
-      expectedReturnDate: '2024-09-15',
+      returnDate: '2024-09-15',
     },
     departmentIDs: [departments[2].id],
   },
@@ -250,7 +250,7 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[6].id,
-      expectedReturnDate: '2024-09-01',
+      returnDate: '2024-09-01',
     },
     departmentIDs: [departments[4].id],
   },
@@ -282,7 +282,7 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[3].id,
-      expectedReturnDate: '2024-09-05',
+      returnDate: '2024-09-05',
     },
     departmentIDs: [departments[2].id],
   },
@@ -377,7 +377,7 @@ const books: Book[] = [
     state: {
       status: BookStatus.Assigned,
       userId: users[4].id,
-      expectedReturnDate: '2024-08-25',
+      returnDate: '2024-08-25',
     },
     departmentIDs: [departments[0].id],
   },
