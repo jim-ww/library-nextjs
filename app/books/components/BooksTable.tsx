@@ -52,12 +52,10 @@ export default function BooksTable({
         comparison = compareBooksByState(a, b);
         break;
       case 'borrowDate':
-        comparison = compareBooksByReturnDate(a, b);
-        break;
-      case 'returnDate':
         comparison = compareBooksByBorrowDate(a, b);
         break;
-      default:
+      case 'returnDate':
+        comparison = compareBooksByReturnDate(a, b);
         break;
     }
 
@@ -65,7 +63,7 @@ export default function BooksTable({
   });
 
   return (
-    <table className="min-w-full h-2/6 border-collapse">
+    <table className="min-w-full h-2/6 border-collapse table-auto overflow-x-auto">
       <thead>
         <tr className="cursor-pointer">
           <TableHead text="Title" onClick={() => handleSortBy('title')} />
@@ -88,8 +86,8 @@ export default function BooksTable({
             onClick={() => handleRowClick(book.id)}
             className="odd:bg-white even:bg-slate-300 hover:bg-slate-400 border-2 border-gray-300 cursor-pointer"
           >
-            <TableData>{book.title}</TableData>
-            <TableData>{book.author}</TableData>
+            <TableData className="max-w-96 min-w-96">{book.title}</TableData>
+            <TableData className="max-w-36 min-w-36">{book.author}</TableData>
             <TableData>{book.state.status}</TableData>
             <BookStatusTD book={book} />
           </tr>
@@ -144,9 +142,5 @@ function TableData({
   className,
   children,
 }: Readonly<{ className?: string; children: ReactNode }>) {
-  return (
-    <td className={`p-2 ${className} truncate max-w-xs min-w-64`}>
-      {children}
-    </td>
-  );
+  return <td className={`p-2 ${className} truncate p-4`}>{children}</td>;
 }
