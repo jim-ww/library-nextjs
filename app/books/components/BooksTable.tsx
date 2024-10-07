@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { BookStatus, type Book } from '../../lib/definitions';
-import { cache, ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import {
   compareBooksByAuthor,
   compareBooksByBorrowDate,
